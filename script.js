@@ -1,4 +1,8 @@
 
+// ===================================
+// WEBSITE KENANGAN 5 TAHUN ❤️
+// ===================================
+
 const openBtn = document.getElementById("openBtn");
 const content = document.getElementById("content");
 
@@ -14,7 +18,72 @@ openBtn.addEventListener("click", () => {
   });
 });
 
-// SLIDER 5 FOTO
+
+// ===================================
+// DATABASE FOTO PERMANEN DI BROWSER
+// ===================================
+
+let db;
+
+function openDatabase() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("AlbumKenangan", 1);
+
+    request.onupgradeneeded = (event) => {
+      const database = event.target.result;
+
+      if (!database.objectStoreNames.contains("photos")) {
+        database.createObjectStore("photos", {
+          keyPath: "id"
+        });
+      }
+    };
+
+    request.onsuccess = () => {
+      db = request.result;
+      resolve(db);
+    };
+
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function savePhotos(files) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction("photos", "readwrite");
+    const store = transaction.objectStore("photos");
+
+    store.clear();
+
+    files.slice(0, 5).forEach((file, index) => {
+      store.put({
+        id: index + 1,
+        name: file.name,
+        blob: file
+      });
+    });
+
+    transaction.oncomplete = resolve;
+    transaction.onerror = () => reject(transaction.error);
+  });
+}
+
+function getPhotos() {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction("photos", "readonly");
+    const store = transaction.objectStore("photos");
+    const request = store.getAll();
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+
+// ===================================
+// GALERI 5 FOTO SLIDER
+// ===================================
+
 const photoInput = document.getElementById("photoInput");
 const sliderTrack = document.getElementById("sliderTrack");
 const sliderWindow = document.getElementById("sliderWindow");
@@ -25,7 +94,7 @@ const photoCounter = document.getElementById("photoCounter");
 
 let currentIndex = 0;
 const totalPhotos = 5;
-let touchStartX = 0;
+let photoURLs = [];
 
 function updateSlider() {
   sliderTrack.style.transform =
@@ -45,10 +114,12 @@ function updateSlider() {
   nextBtn.style.opacity = nextBtn.disabled ? "0.4" : "1";
 }
 
+// BUAT 5 TITIK NAVIGASI
 for (let i = 0; i < totalPhotos; i++) {
   const dot = document.createElement("button");
+
   dot.className = "dot";
-  dot.setAttribute("aria-label", `Buka foto ${i + 1}`);
+  dot.setAttribute("aria-label", `Foto ${i + 1}`);
 
   dot.addEventListener("click", () => {
     currentIndex = i;
@@ -58,6 +129,7 @@ for (let i = 0; i < totalPhotos; i++) {
   dotsContainer.appendChild(dot);
 }
 
+// TOMBOL KIRI DAN KANAN
 prevBtn.addEventListener("click", () => {
   if (currentIndex > 0) {
     currentIndex--;
@@ -72,7 +144,9 @@ nextBtn.addEventListener("click", () => {
   }
 });
 
-// GESER FOTO DENGAN JARI DI HP
+// GESER FOTO PAKAI JARI
+let touchStartX = 0;
+
 sliderWindow.addEventListener("touchstart", (event) => {
   touchStartX = event.changedTouches[0].screenX;
 }, { passive: true });
@@ -92,29 +166,36 @@ sliderWindow.addEventListener("touchend", (event) => {
   updateSlider();
 }, { passive: true });
 
-updateSlider();
 
-// UPLOAD MAKSIMAL 5 FOTO
-photoInput.addEventListener("change", () => {
-  const files = Array.from(photoInput.files).slice(0, 5);
+// ===================================
+// TAMPILKAN FOTO
+// ===================================
 
-  if (photoInput.files.length > 5) {
-    alert("Maksimal hanya 5 foto ya!");
-  }
-
+function displayPhotos(photos) {
   const slides = sliderTrack.querySelectorAll(".slide");
+
+  // Hapus URL foto lama
+  photoURLs.forEach(url => URL.revokeObjectURL(url));
+  photoURLs = [];
 
   slides.forEach((slide, index) => {
     slide.innerHTML = "";
 
-    if (files[index]) {
+    const photo = photos[index];
+
+    if (photo) {
       const img = document.createElement("img");
-      img.src = URL.createObjectURL(files[index]);
-      img.alt = `Kenangan ${index + 1}`;
+
+      const url = URL.createObjectURL(photo.blob);
+      photoURLs.push(url);
+
+      img.src = url;
+      img.alt = photo.name || `Foto kenangan ${index + 1}`;
 
       slide.appendChild(img);
     } else {
       const placeholder = document.createElement("div");
+
       placeholder.className = "photo-placeholder";
       placeholder.innerHTML = `
         <span>♡</span>
@@ -128,9 +209,45 @@ photoInput.addEventListener("change", () => {
 
   currentIndex = 0;
   updateSlider();
+}
+
+
+// ===================================
+// UPLOAD DAN SIMPAN 5 FOTO
+// ===================================
+
+photoInput.addEventListener("change", async () => {
+  const files = Array.from(photoInput.files)
+    .filter(file => file.type.startsWith("image/"))
+    .slice(0, 5);
+
+  if (photoInput.files.length > 5) {
+    alert("Maksimal hanya 5 foto ya!");
+  }
+
+  if (files.length === 0) return;
+
+  try {
+    await savePhotos(files);
+
+    const savedPhotos = await getPhotos();
+    displayPhotos(savedPhotos);
+
+    alert("Yeay! Foto kenangan berhasil disimpan ❤️");
+
+  } catch (error) {
+    console.error(error);
+    alert("Gagal menyimpan foto. Coba lagi ya!");
+  }
+
+  photoInput.value = "";
 });
 
-// SIMPAN CATATAN OTOMATIS
+
+// ===================================
+// CATATAN OTOMATIS
+// ===================================
+
 const note = document.getElementById("note");
 const saveStatus = document.getElementById("saveStatus");
 
@@ -140,16 +257,21 @@ try {
   note.addEventListener("input", () => {
     try {
       localStorage.setItem("catatanKita", note.value);
-      saveStatus.textContent = "✓ Catatan berhasil disimpan.";
+      saveStatus.textContent = "✓ Catatan berhasil disimpan ❤️";
     } catch (error) {
-      saveStatus.textContent = "Gagal menyimpan. Silakan salin catatan.";
+      saveStatus.textContent = "Gagal menyimpan catatan.";
     }
   });
+
 } catch (error) {
   saveStatus.textContent = "Penyimpanan browser tidak tersedia.";
 }
 
-// UPLOAD MUSIK
+
+// ===================================
+// MUSIK
+// ===================================
+
 const musicInput = document.getElementById("musicInput");
 const musicPlayer = document.getElementById("musicPlayer");
 const musicName = document.getElementById("musicName");
@@ -167,9 +289,38 @@ musicInput.addEventListener("change", () => {
 
   musicURL = URL.createObjectURL(file);
   musicPlayer.src = musicURL;
+
   musicName.textContent = "♫ " + file.name;
 
   musicPlayer.play().catch(() => {
-    musicName.textContent = "♫ " + file.name + " — tekan Play untuk memutar.";
+    musicName.textContent =
+      "♫ " + file.name + " — tekan Play untuk memutar.";
   });
 });
+
+
+// ===================================
+// SAAT WEBSITE DIBUKA KEMBALI
+// ===================================
+
+async function initializeWebsite() {
+  try {
+    await openDatabase();
+
+    const savedPhotos = await getPhotos();
+
+    displayPhotos(savedPhotos);
+
+    console.log("Album kenangan berhasil dimuat ❤️");
+
+  } catch (error) {
+    console.error("Database error:", error);
+
+    alert(
+      "Penyimpanan foto tidak bisa dibuka. " +
+      "Coba jalankan website menggunakan VS Code Live Server."
+    );
+  }
+}
+
+initializeWebsite();
