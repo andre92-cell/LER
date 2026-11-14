@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Untuk Kita, 5 Tahun ke Depan ❤️</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <main class="container">
+
+    <div class="heart">♡</div>
+    <div class="eyebrow">A LITTLE MEMORY FOR US</div>
+
+    <h1>Untuk Kita,<br>5 Tahun ke Depan</h1>
+
+    <div class="letter">
+      <h2>Hai, teman-teman...</h2>
+
+      <p>Capek nggak sih melewati perjalanan 5 tahun ini?</p>
+
+      <p>
+        Banyak banget hal yang sudah kita lewati bersama.
+        Mulai dari tawa, canda, masalah, pertengkaran kecil,
+        sampai momen-momen yang mungkin nggak akan pernah
+        bisa terulang lagi.
+      </p>
+
+      <p>
+        Nggak terasa, waktu berjalan begitu cepat.
+        Dulu kita cuma sekumpulan orang yang saling mengenal,
+        sekarang kita punya begitu banyak cerita untuk dikenang.
+      </p>
+
+      <p>
+        Kalau suatu hari nanti kita sudah punya jalan masing-masing,
+        jangan lupa ya, kita pernah menjadi bagian dari cerita
+        indah satu sama lain.
+      </p>
+
+      <p>Terima kasih sudah bertahan sejauh ini. ❤️</p>
+
+      <div class="signature">
+        Dengan penuh kenangan, ❤️
+        <span>Teman-teman yang pernah berjalan bersama.</span>
+      </div>
+    </div>
+
+    <button id="openBtn" class="main-button">
+      Buka Kenangan Kita ❤️
+    </button>
+
+    <section id="content" class="hidden">
+
+      <div class="section">
+        <h2>📸 Potongan Cerita Kita</h2>
+        <p class="description">
+          Lima foto, sejuta cerita. Geser untuk melihat semuanya.
+        </p>
+
+        <label for="photoInput" class="upload-button">
+          ＋ Pilih 5 Foto Kenangan
+        </label>
+        <input type="file" id="photoInput" accept="image/*" multiple>
+
+        <div class="slider">
+          <button class="arrow prev" id="prevBtn" aria-label="Foto sebelumnya">‹</button>
+
+          <div class="slider-window" id="sliderWindow">
+            <div class="slider-track" id="sliderTrack">
+
+              <div class="slide">
+                <div class="photo-placeholder">
+                  <span>♡</span>
+                  <p>Foto Kenangan 1</p>
+                  <small>Awal cerita kita</small>
+                </div>
+              </div>
+
+              <div class="slide">
+                <div class="photo-placeholder">
+                  <span>♡</span>
+                  <p>Foto Kenangan 2</p>
+                  <small>Momen kebersamaan</small>
+                </div>
+              </div>
+
+              <div class="slide">
+                <div class="photo-placeholder">
+                  <span>♡</span>
+                  <p>Foto Kenangan 3</p>
+                  <small>Tawa yang tak terlupakan</small>
+                </div>
+              </div>
+
+              <div class="slide">
+                <div class="photo-placeholder">
+                  <span>♡</span>
+                  <p>Foto Kenangan 4</p>
+                  <small>Cerita perjalanan kita</small>
+                </div>
+              </div>
+
+              <div class="slide">
+                <div class="photo-placeholder">
+                  <span>♡</span>
+                  <p>Foto Kenangan 5</p>
+                  <small>Kenangan terakhir di album</small>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <button class="arrow next" id="nextBtn" aria-label="Foto berikutnya">›</button>
+        </div>
+
+        <div class="dots" id="dots"></div>
+        <p class="photo-counter" id="photoCounter">1 / 5</p>
+      </div>
+
+      <div class="section">
+        <h2>💌 Catatan Untuk Masa Depan</h2>
+        <p class="description">
+          Tinggalkan pesan untuk dibaca lagi nanti.
+        </p>
+
+        <textarea id="note" placeholder="Hai, teman-teman...
+
+Semoga di mana pun kita berada,
+kita tetap ingat cerita ini.
+
+Jangan pernah lupa satu sama lain. ❤️"></textarea>
+
+        <p class="save-status" id="saveStatus">
+          Catatan tersimpan otomatis.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>🎵 Lagu Kenangan</h2>
+        <p class="description">
+          Pilih lagu yang mengingatkan kita pada masa-masa ini.
+        </p>
+
+        <label for="musicInput" class="upload-button">
+          ♫ Pilih Lagu
+        </label>
+        <input type="file" id="musicInput" accept="audio/*">
+
+        <p id="musicName" class="music-name">
+          Belum ada lagu yang dipilih.
+        </p>
+
+        <audio id="musicPlayer" controls></audio>
+      </div>
+
+      <div class="ending">
+        Sejauh apa pun langkah kita nanti,<br>
+        semoga kenangan ini tetap punya tempat. ❤️
+      </div>
+
+    </section>
+
+    <footer>MADE WITH LOVE & MEMORIES</footer>
+
+  </main>
+
+</body>
+</html>
