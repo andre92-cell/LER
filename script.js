@@ -1,22 +1,34 @@
 
 // ===================================
-// WEBSITE KENANGAN 5 TAHUN 
+// WEBSITE KENANGAN 5 TAHUN
 // VERSI HOSTING ONLINE
 // ===================================
 
-// BUKA KENANGAN
+// BUKA KENANGAN + ANIMASI KEDIP 1 KALI
 const openBtn = document.getElementById("openBtn");
 const content = document.getElementById("content");
 
 openBtn.addEventListener("click", () => {
+  // Efek kedip satu kali
+  document.body.classList.remove("blink-once");
+  void document.body.offsetWidth;
+  document.body.classList.add("blink-once");
+
+  // Tampilkan semua kenangan bersamaan
   content.classList.remove("hidden");
-  openBtn.textContent = "Kenangan Kita Terbuka ";
+
+  openBtn.textContent = "Kenangan Kita Terbuka ❤️";
   openBtn.disabled = true;
 
   content.scrollIntoView({
     behavior: "smooth",
     block: "start"
   });
+
+  // Bersihkan class setelah animasi selesai
+  setTimeout(() => {
+    document.body.classList.remove("blink-once");
+  }, 500);
 });
 
 
@@ -167,7 +179,7 @@ try {
     try {
       localStorage.setItem("catatanKita", note.value);
       saveStatus.textContent =
-        "✓ Catatan berhasil disimpan ";
+        "✓ Catatan berhasil disimpan";
     } catch (error) {
       saveStatus.textContent = "Gagal menyimpan catatan.";
     }
@@ -199,7 +211,8 @@ if (musicInput) {
 musicPlayer.src = "music.mp3";
 musicPlayer.preload = "metadata";
 
-musicName.textContent = "♫ Lagu Kenangan Kita ";
+musicName.textContent = "♫ Lagu Kenangan Kita";
+
 
 // ===================================
 // JALANKAN WEBSITE
@@ -207,4 +220,4 @@ musicName.textContent = "♫ Lagu Kenangan Kita ";
 
 displayPhotos();
 
-console.log("Website Kenangan 5 Tahun siap ");
+console.log("Website Kenangan 5 Tahun siap ❤️");
