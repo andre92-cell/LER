@@ -4,7 +4,41 @@
 // VERSI HOSTING ONLINE
 // ===================================
 
-// BUKA KENANGAN + ANIMASI KEDIP 1 KALI + MUSIK OTOMATIS
+// ===================================
+// MUSIK ONLINE
+// ===================================
+
+const musicInput = document.getElementById("musicInput");
+const musicPlayer = document.getElementById("musicPlayer");
+const musicName = document.getElementById("musicName");
+
+// Hilangkan tombol upload musik
+if (musicInput) {
+  musicInput.style.display = "none";
+
+  const musicLabel = document.querySelector('label[for="musicInput"]');
+  if (musicLabel) musicLabel.style.display = "none";
+}
+
+// Hubungkan musik dari GitHub
+musicPlayer.src = "music.mp3";
+musicPlayer.preload = "auto";
+musicPlayer.autoplay = true;
+musicPlayer.loop = true;
+musicPlayer.volume = 0.7;
+
+musicName.textContent = "♫ Lagu Kenangan Kita";
+
+// Coba putar musik saat website dibuka
+musicPlayer.play().catch((error) => {
+  console.log("Autoplay diblokir browser:", error);
+});
+
+
+// ===================================
+// BUKA KENANGAN + ANIMASI KEDIP
+// ===================================
+
 const openBtn = document.getElementById("openBtn");
 const content = document.getElementById("content");
 
@@ -14,13 +48,13 @@ openBtn.addEventListener("click", () => {
   void document.body.offsetWidth;
   document.body.classList.add("blink-once");
 
-  // Tampilkan semua kenangan bersamaan
+  // Tampilkan semua kenangan
   content.classList.remove("hidden");
 
   openBtn.textContent = "Kenangan Kita Terbuka ❤️";
   openBtn.disabled = true;
 
-  // Putar musik otomatis setelah tombol diklik
+  // Coba putar musik lagi jika sebelumnya diblokir
   musicPlayer.play().catch((error) => {
     console.log("Musik belum bisa diputar:", error);
   });
@@ -30,7 +64,6 @@ openBtn.addEventListener("click", () => {
     block: "start"
   });
 
-  // Bersihkan class setelah animasi selesai
   setTimeout(() => {
     document.body.classList.remove("blink-once");
   }, 500);
@@ -194,29 +227,6 @@ try {
   saveStatus.textContent =
     "Penyimpanan browser tidak tersedia.";
 }
-
-
-// ===================================
-// MUSIK ONLINE
-// ===================================
-
-const musicInput = document.getElementById("musicInput");
-const musicPlayer = document.getElementById("musicPlayer");
-const musicName = document.getElementById("musicName");
-
-// Hilangkan tombol upload musik
-if (musicInput) {
-  musicInput.style.display = "none";
-
-  const musicLabel = document.querySelector('label[for="musicInput"]');
-  if (musicLabel) musicLabel.style.display = "none";
-}
-
-// Hubungkan musik dari GitHub
-musicPlayer.src = "music.mp3";
-musicPlayer.preload = "auto";
-
-musicName.textContent = "♫ Lagu Kenangan Kita";
 
 
 // ===================================
