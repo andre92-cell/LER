@@ -1,0 +1,194 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffe0e9, #fff5f0);
+  font-family: Georgia, serif;
+  color: #63434e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  background: white;
+  width: 100%;
+  max-width: 700px;
+  padding: 40px 25px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 10px 40px #c98d9b30;
+}
+
+.heart {
+  font-size: 55px;
+  color: #e58da3;
+  animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+  50% { transform: scale(1.2); }
+}
+
+.small-title {
+  letter-spacing: 4px;
+  font-size: 11px;
+  color: #d58b9c;
+  margin: 15px;
+}
+
+h1 {
+  font-size: 42px;
+  margin: 20px 0;
+}
+
+.intro {
+  line-height: 1.8;
+  color: #987d85;
+  margin-bottom: 25px;
+}
+
+button {
+  background: #df91a4;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover {
+  background: #c8758b;
+}
+
+.hidden {
+  display: none;
+}
+
+#content {
+  margin-top: 40px;
+  animation: muncul 1s ease;
+}
+
+@keyframes muncul {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2 {
+  margin: 25px 0 12px;
+}
+
+#content p {
+  color: #987d85;
+  margin-bottom: 15px;
+}
+
+input {
+  margin: 15px 0;
+  max-width: 100%;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 160px;
+  padding: 15px;
+  border: 1px solid #edcbd3;
+  border-radius: 15px;
+  font-family: Georgia, serif;
+  line-height: 1.7;
+}
+
+audio {
+  width: 100%;
+  margin: 15px 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #f3dce2;
+  margin: 30px 0;
+}
+
+.ending {
+  margin-top: 30px;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  .container {
+    padding: 30px 18px;
+  }
+}
+
+.letter {
+  text-align: left;
+  background: #fff9f7;
+  padding: 28px;
+  border-radius: 18px;
+  border: 1px solid #f3dce2;
+  margin: 30px 0;
+  line-height: 1.9;
+}
+
+.letter h2 {
+  font-size: 23px;
+  margin: 0 0 20px;
+  color: #bd788a;
+}
+
+.letter p {
+  font-size: 15px;
+  color: #806b72;
+  margin-bottom: 17px;
+  text-align: justify;
+}
+
+.signature {
+  margin-top: 25px;
+  color: #bd788a;
+  font-style: italic;
+  line-height: 1.8;
+}
+
+.signature span {
+  font-size: 12px;
+  color: #a58d94;
+}
+
+footer {
+  margin-top: 35px;
+  font: 10px Arial, sans-serif;
+  letter-spacing: 3px;
+  color: #c29da7;
+}
