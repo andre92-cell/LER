@@ -4,7 +4,7 @@
 // VERSI HOSTING ONLINE
 // ===================================
 
-// BUKA KENANGAN + ANIMASI KEDIP 1 KALI
+// BUKA KENANGAN + ANIMASI KEDIP 1 KALI + MUSIK OTOMATIS
 const openBtn = document.getElementById("openBtn");
 const content = document.getElementById("content");
 
@@ -19,6 +19,11 @@ openBtn.addEventListener("click", () => {
 
   openBtn.textContent = "Kenangan Kita Terbuka ❤️";
   openBtn.disabled = true;
+
+  // Putar musik otomatis setelah tombol diklik
+  musicPlayer.play().catch((error) => {
+    console.log("Musik belum bisa diputar:", error);
+  });
 
   content.scrollIntoView({
     behavior: "smooth",
@@ -209,7 +214,7 @@ if (musicInput) {
 
 // Hubungkan musik dari GitHub
 musicPlayer.src = "music.mp3";
-musicPlayer.preload = "metadata";
+musicPlayer.preload = "auto";
 
 musicName.textContent = "♫ Lagu Kenangan Kita";
 
